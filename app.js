@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {graphqlHTTP} = require("express-graphql");
 const {buildSchema} = require("graphql");
-
+const mongoose = require("mongoose");
 
 const app = express();
 const events = [];
@@ -61,4 +61,11 @@ app.use('/graphql', graphqlHTTP({
     graphiql: true
 }));
 
-app.listen(4000);
+mongoose.connect('mongodb://localhost:27017/Event_Manage')
+    .then(() => {
+        app.listen(4000);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
